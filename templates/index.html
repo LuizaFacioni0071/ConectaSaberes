@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Início - Conecta Saberes{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Conectando quem quer ensinar com quem quer aprender.</h1>
+        <p class="hero-text">
+            O <strong>Conecta Saberes</strong> é uma plataforma gratuita que democratiza o acesso 
+            a mentorias. Encontre orientação ou compartilhe experiência.
+        </p>
+        <div class="hero-buttons">
+            {% if not session.get('user_id') %}
+                <a href="{{ url_for('cadastro') }}" class="btn-primary">Quero participar</a>
+                <a href="{{ url_for('login') }}" class="btn-secondary">Já tenho conta</a>
+            {% else %}
+                <a href="{{ url_for('match') }}" class="btn-primary">Ir para Mentores</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="section-padrao">
+    <h2 class="titulo-secao">Como funciona?</h2>
+    
+    <div class="grid-passos">
+        <div class="card-passo">
+            <div class="numero-passo">1</div>
+            <h3>Crie seu Perfil</h3>
+            <p>Cadastre-se como <strong>Mentor</strong> ou <strong>Mentorado</strong> e defina sua área de interesse.</p>
+        </div>
+
+        <div class="card-passo">
+            <div class="numero-passo">2</div>
+            <h3>Encontre o Match</h3>
+            <p>Nossa busca inteligente conecta você a pessoas com objetivos compatíveis.</p>
+        </div>
+
+        <div class="card-passo">
+            <div class="numero-passo">3</div>
+            <h3>Conecte-se</h3>
+            <p>Inicie a conversa diretamente pelo <strong>WhatsApp</strong> e agende sua mentoria.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section-bg-alt">
+    <div class="container-limitado">
+        <h2 class="titulo-secao">Áreas de Mentoria</h2>
+        <p class="subtitulo">Encontre apoio nas principais áreas do mercado:</p>
+        
+        <div class="grid-areas">
+            <div class="card-area">💻 Tecnologia</div>
+            <div class="card-area">🏥 Saúde</div>
+            <div class="card-area">🎓 Educação</div>
+            <div class="card-area">📈 Negócios</div>
+            <div class="card-area">🎨 Artes</div>
+            <div class="card-area">⚙️ Engenharia</div>
+            <div class="card-area">⚖️ Direito</div>
+            <div class="card-area">🧠 Humanas</div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-final">
+    <div class="cta-content">
+        <h3>Pronto para desenvolver sua carreira?</h3>
+        <p>Faça parte dessa rede de apoio extensionista hoje mesmo.</p>
+        <br>
+        <a href="{{ url_for('cadastro') }}" class="btn-destaque-final">Começar Agora</a>
+    </div>
+</section>
+
+{% endblock %}
