@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Conecta Saberes{% endblock %}
+
+{% block content %}
+
+<div class="container-form">
+    <h2>Acesse sua conta</h2>
+    <p>Entre para gerenciar seu perfil ou buscar mentores.</p>
+
+    <form method="POST" action="{{ url_for('login') }}" class="form-login">
+
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required placeholder="Digite seu e-mail cadastrado">
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
+        </div>
+
+        <button type="submit" class="btn-submit">Entrar</button>
+
+    </form>
+
+    <hr>
+
+    <p class="text-center">
+        Ainda não faz parte do Conecta Saberes? <br>
+        <a href="{{ url_for('cadastro') }}">Crie sua conta gratuitamente</a>.
+    </p>
+</div>
+
+{% endblock %}
