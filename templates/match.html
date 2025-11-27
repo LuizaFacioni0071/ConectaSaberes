@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Encontrar Mentores - Conecta Saberes{% endblock %}
+
+{% block content %}
+
+<div class="container-match">
+
+    {% if tipo_visao == 'procurar_mentores' %}
+    
+        <div class="header-match">
+            <h2>Encontre seu Mentor</h2>
+            <p>Selecione uma área para filtrar os profissionais disponíveis.</p>
+        </div>
+
+        <form action="{{ url_for('match') }}" method="GET" class="form-filtro">
+            <label for="filtro-area">Filtrar por Área:</label>
+            <select name="area" id="filtro-area" onchange="this.form.submit()">
+                <option value="">Todas as áreas</option>
+                <option value="Tecnologia" {% if request.args.get('area') == 'Tecnologia' %}selected{% endif %}>Tecnologia</option>
+                <option value="Saúde" {% if request.args.get('area') == 'Saúde' %}selected{% endif %}>Saúde</option>
+                <option value="Educação" {% if request.args.get('area') == 'Educação' %}selected{% endif %}>Educação</option>
+                <option value="Negócios" {% if request.args.get('area') == 'Negócios' %}selected{% endif %}>Negócios</option>
+                <option value="Artes" {% if request.args.get('area') == 'Artes' %}selected{% endif %}>Artes</option>
+                <option value="Engenharia" {% if request.args.get('area') == 'Engenharia' %}selected{% endif %}>Engenharia</option>
+                <option value="Humanas" {% if request.args.get('area') == 'Humanas' %}selected{% endif %}>Humanas</option>
+            </select>
+        </form>
+
+        <hr>
+
+        <div class="grid-mentores">
+            {% for mentor in lista %}
+                <div class="card-mentor">
+                    <div class="card-header">
+                        <img src="https://ui-avatars.com/api/?name={{ mentor['nome'] }}&background=random&color=fff&size=64&bold=true" 
+                        alt="Foto de {{ mentor['nome'] }}"
+                        width="60" height="60">
+                        <div>
+                            <h3>{{ mentor['nome'] }}</h3>
+                            <span class="tag-area">{{ mentor['area'] }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <p class="bio-text">"{{ mentor['bio'] }}"</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <a href="https://wa.me/55{{ mentor['whatsapp'] }}?text=Olá {{ mentor['nome'] }}, vi seu perfil no Conecta Saberes e gostaria de solicitar uma mentoria." 
+                           class="btn-whatsapp"
+                           target="_blank"
+                           onclick="registrarConexao({{ mentor['id'] }})">
+                           
+                           💬 Solicitar Mentoria
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum mentor encontrado nesta área no momento.</p>
+                    <a href="{{ url_for('match') }}">Ver todas as áreas</a>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+    
+        <div class="painel-mentor">
+            <h2>Olá, Mentor(a)!</h2>
+            <div class="card-status">
+                <h3>Seu perfil está ativo</h3>
+                <p>Você está visível para alunos de <strong>{{ session['user_area'] }}</strong> (sua área cadastrada).</p>
+                <p>Fique atento ao seu WhatsApp! Os alunos entrarão em contato por lá.</p>
+                <br>
+                <p><em>Dica: Mantenha sua biografia atualizada para atrair mais mentorados.</em></p>
+            </div>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+    function registrarConexao(mentorId) {
+        // Faz uma chamada "invisível" para o backend
+        fetch(`/registrar_conexao/${mentorId}`)
+            .then(response => response.json())
+            .then(data => console.log('Conexão registrada:', data))
+            .catch(error => console.error('Erro ao registrar:', error));
+            
+        // O link do WhatsApp continuará abrindo normalmente
+    }
+</script>
+
+{% endblock %}
