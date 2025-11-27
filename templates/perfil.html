@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Meu Perfil - Conecta Saberes{% endblock %}
+
+{% block content %}
+
+<div class="container-match">
+    
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h2 class="titulo-secao" style="margin-bottom: 10px;">Meu Perfil</h2>
+        <p style="color: #636e72;">Gerencie suas informações pessoais e profissionais.</p>
+    </div>
+
+    <div class="card-mentor" style="max-width: 600px; margin: 0 auto; cursor: default; transform: none;">
+        
+        <div class="card-header" style="flex-direction: column; text-align: center; padding-bottom: 30px;">
+            <img src="https://ui-avatars.com/api/?name={{ usuario['nome'] }}&background=random&color=fff&size=128&bold=true" 
+                 alt="Foto de {{ usuario['nome'] }}"
+                 style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.15); margin-bottom: 15px;">
+            
+            <div>
+                <h3 style="font-size: 1.8rem; margin-bottom: 10px;">{{ usuario['nome'] }}</h3>
+                
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <span class="tag-area" style="background-color: var(--primary-solid); color: white;">
+                        {{ usuario['tipo'] | capitalize }}
+                    </span>
+                    <span class="tag-area">
+                        {{ usuario['area'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: bold; color: var(--primary-solid); display: block; margin-bottom: 5px;">📧 E-mail:</label>
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; border: 1px solid #eee; color: #555;">
+                    {{ usuario['email'] }}
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: bold; color: var(--primary-solid); display: block; margin-bottom: 5px;">📱 WhatsApp:</label>
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; border: 1px solid #eee; display: flex; align-items: center; gap: 10px; font-weight: 500;">
+                    <span style="font-size: 1.2rem;">💬</span>
+                    {{ usuario['whatsapp'] }}
+                </div>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; color: var(--primary-solid); display: block; margin-bottom: 5px;">📝 Minha Biografia:</label>
+                <div style="background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee; font-style: italic; color: #555; line-height: 1.6;">
+                    "{{ usuario['bio'] }}"
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 25px;">
+            
+            {% if usuario['tipo'] == 'mentorado' %}
+                <a href="{{ url_for('match') }}" class="btn-secondary" style="color: #666; border-color: #ccc; padding: 10px 20px;">
+                    🔍 Buscar Mentores
+                </a>
+            {% endif %}
+            
+            <a href="{{ url_for('editar_perfil') }}" class="btn-secondary" style="border-color: var(--primary-solid); color: var(--primary-solid); padding: 10px 20px;">
+                ✏️ Editar Dados
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="btn-sair" style="padding: 10px 20px; border: 1px solid #e74c3c; border-radius: 50px; background: white; font-weight: bold; text-decoration: none; color: #e74c3c;">
+                Sair da Conta
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
