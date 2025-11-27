@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro - Conecta Saberes{% endblock %}
+
+{% block content %}
+
+<div class="container-form">
+    <h2>Crie sua conta</h2>
+    <p>Junte-se à nossa comunidade de troca de saberes.</p>
+
+    <form method="POST" action="{{ url_for('cadastro') }}" class="form-cadastro">
+
+        <div class="form-group">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" required placeholder="Ex: Maria Silva">
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required placeholder="Crie uma senha segura">
+        </div>
+
+        <div class="form-group">
+            <label for="whatsapp">WhatsApp (com DDD):</label>
+            <input type="tel" id="whatsapp" name="whatsapp" required placeholder="Ex: 11999999999" pattern="[0-9]+">
+            <small>Apenas números. Será usado para conectar você ao seu par.</small>
+        </div>
+
+        <hr>
+        
+        <div class="form-group">
+            <label>Você quer participar como:</label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="tipo" value="mentorado" checked>
+                    <strong>Mentorado(a)</strong> - Busco orientação
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="tipo" value="mentor">
+                    <strong>Mentor(a)</strong> - Quero compartilhar conhecimento
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="area">Área de Interesse / Atuação:</label>
+            <select id="area" name="area" required>
+                <option value="" disabled selected>Selecione uma área...</option>
+                <option value="Tecnologia">Tecnologia e Inovação</option>
+                <option value="Saúde">Saúde e Bem-estar</option>
+                <option value="Educação">Educação e Pedagogia</option>
+                <option value="Negócios">Negócios e Finanças</option>
+                <option value="Artes">Artes e Design</option>
+                <option value="Engenharia">Engenharias</option>
+                <option value="Humanas">Ciências Humanas</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="bio">Biografia / Objetivo:</label>
+            <textarea id="bio" name="bio" rows="4" required placeholder="Conte um pouco sobre sua experiência ou o que você busca aprender..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Finalizar Cadastro</button>
+
+    </form>
+    
+    <p class="text-center">
+        Já tem uma conta? <a href="{{ url_for('login') }}">Faça Login aqui</a>.
+    </p>
+</div>
+
+{% endblock %}
