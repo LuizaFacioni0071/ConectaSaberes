@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Conecta Saberes{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<div class="acessibilidade-toolbar">
+    <button onclick="mudarFonte(1)" title="Aumentar Fonte">A+</button>
+    <button onclick="mudarFonte(-1)" title="Diminuir Fonte">A-</button>
+    <button onclick="alternarContraste()" title="Alto Contraste">◐</button>
+</div>
+<body>
+
+    <header>
+        <nav role="navigation" aria-label="Menu Principal" class="navbar">
+            <div class="logo">
+                <a href="{{ url_for('index') }}">Conecta Saberes</a>
+            </div>
+
+            <div class="menu-links">
+                <a href="{{ url_for('index') }}">Início</a>
+
+                {% if session.get('user_id') %}
+                    {% if session.get('user_tipo') == 'mentorado' %}
+                        <a href="{{ url_for('match') }}">Buscar Mentores</a>
+                    {% else %}
+                        <a href="{{ url_for('match') }}">Meu Painel</a>
+                    {% endif %}
+
+                    <a href="{{ url_for('perfil') }}" class="msg-ola" title="Clique para ver seu perfil">
+                        Olá, {{ session.get('user_nome').split()[0] }}! 👤
+                    </a>
+                    
+                    <a href="{{ url_for('logout') }}" class="btn-sair">Sair</a>
+                
+                {% else %}
+                    <a href="{{ url_for('login') }}">Entrar</a>
+                    <a href="{{ url_for('cadastro') }}" class="btn-destaque">Cadastre-se</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-alertas">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Conecta Saberes - Projeto de Extensão Universitária.</p>
+            <p><small>Desenvolvido com foco em Acessibilidade e Desenho Universal.</small></p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
