@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Perfil - Conecta Saberes{% endblock %}
+
+{% block content %}
+
+<div class="container-form">
+    <div style="text-align: center; margin-bottom: 35px;">
+        <h2 class="titulo-secao" style="margin-bottom: 10px;">Editar Meus Dados</h2>
+        <p style="color: var(--text-light);">Mantenha suas informações sempre atualizadas.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('editar_perfil') }}">
+
+        <div class="form-group">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" value="{{ usuario['nome'] }}" required placeholder="Seu nome completo">
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail (Não editável):</label>
+            <input type="email" value="{{ usuario['email'] }}" disabled>
+            <small style="display: block; margin-top: 8px; color: #999; font-size: 0.85rem;">
+                🔒 Por segurança, o e-mail não pode ser alterado aqui.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="whatsapp">WhatsApp (apenas números):</label>
+            <input type="tel" id="whatsapp" name="whatsapp" value="{{ usuario['whatsapp'] }}" required pattern="[0-9]+" placeholder="Ex: 11999999999">
+        </div>
+
+        <div class="form-group">
+            <label for="area">Área de Interesse / Atuação:</label>
+            <select id="area" name="area" required>
+                <option value="Tecnologia" {% if usuario['area'] == 'Tecnologia' %}selected{% endif %}>Tecnologia e Inovação</option>
+                <option value="Saúde" {% if usuario['area'] == 'Saúde' %}selected{% endif %}>Saúde e Bem-estar</option>
+                <option value="Educação" {% if usuario['area'] == 'Educação' %}selected{% endif %}>Educação e Pedagogia</option>
+                <option value="Negócios" {% if usuario['area'] == 'Negócios' %}selected{% endif %}>Negócios e Finanças</option>
+                <option value="Artes" {% if usuario['area'] == 'Artes' %}selected{% endif %}>Artes e Design</option>
+                <option value="Engenharia" {% if usuario['area'] == 'Engenharia' %}selected{% endif %}>Engenharias</option>
+                <option value="Humanas" {% if usuario['area'] == 'Humanas' %}selected{% endif %}>Ciências Humanas</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="bio">Biografia / Objetivo:</label>
+            <textarea id="bio" name="bio" rows="5" required placeholder="Conte um pouco sobre sua trajetória...">{{ usuario['bio'] }}</textarea>
+        </div>
+
+        <div class="form-buttons-container">
+            <button type="submit" class="btn-submit">Salvar Alterações</button>
+            <a href="{{ url_for('perfil') }}" class="btn-cancel">Cancelar</a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
